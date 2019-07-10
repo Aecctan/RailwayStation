@@ -1,0 +1,46 @@
+
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+
+<button onclick="add()">Add</button>
+<button onclick="remove()">Remove</button>
+<button onclick="change()">Change</button>
+<ul id="lst"></ul>
+<script>
+    function add() {
+        var u = document.getElementById('lst');
+        var p = document.createElement("li");
+        // p.innerHTML = 'Hello ' + (u.children.length+1)
+        // u.appendChild( p )
+
+        fetch('http://localhost:8080/JPAsample_war_exploded/api/person/1')
+            .then(function (response) {
+                console.log(response)
+                return response.json();
+            })
+            .then(function (myJson) {
+              console.log(myJson)
+                p.innerHTML = JSON.stringify(myJson); // если текст JSON
+                // p.innerHTML = myJson.name+my
+                u.appendChild( p )
+            })
+    }
+    function change() {
+        var p = document.querySelectorAll('#lst > li:nth-child(2)')
+        if (p) {
+            console.log(p[0])
+            p[0].innerHTML = p[0].innerHTML + '!'
+        }
+    }
+    function remove() {
+        var p = document.querySelectorAll('#lst > li:last-child')
+        console.log(p[0])
+        p[0].remove()
+    }
+</script>
+
+</body>
+</html>

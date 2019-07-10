@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>all cats</title>
+</head>
+<body>
+<table id="table"></table>
+<!--<ul id="lst"></ul>-->
+<script>
+    var table = document.getElementById('table');
+    // var tr = document.createElement("tr");
+    // var td = document.createElement("td");
+
+    // var u = document.getElementById('lst');
+    // var p = document.createElement("li");
+
+    fetch('http://localhost:8080/JPAsample_war_exploded/api/allcats')
+        .then(function (response) {
+            console.log(response)
+            return response.json();
+        })
+        .then(function (myJson) {
+            console.log(myJson)
+            // p.innerHTML = JSON.stringify(myJson); // если текст JSON
+            for (var i = 0; i< myJson.length; i++) {
+                // var newRow = table.insertRow(i)
+                // // for (var j = 0; j<myJson)
+                // var newCell = newRow.insertCell(0)
+                // var newText = document.createTextNode(myJson[i].name)
+                // newCell.appendChild(newText)
+                var tr = document.createElement("tr");
+                tr.innerHTML=`<td>${myJson[i].name}</td><td>${myJson[i].weight}</td><td>${myJson[i].id}</td><td><button onclick="deleteCat(${myJson[i].id})">X</button></td>`
+
+                table.appendChild(tr)
+
+            }
+        })
+
+    function deleteCat(id) {
+        fetch('http://localhost:8080/JPAsample_war_exploded/api/cat/'+id, {method: 'DELETE'}
+    ).catch(function(err) {
+            alert(err);
+        })
+
+    }
+</script>
+
+</body>
+</html>
